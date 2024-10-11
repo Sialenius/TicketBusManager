@@ -1,5 +1,7 @@
 package com.jfb.lecture5;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfb.lecture5.model.BusTicket;
 import com.jfb.lecture5.model.Validator;
@@ -9,9 +11,9 @@ import java.util.ArrayList;
 
 
 public class Main {
-  public static void main(String[] args) throws IOException, IllegalAccessException {
+  public static void main(String[] args)  {
 
-    File file = new File("src/main/resources/ticketData.txt");
+    File file = new File("src/main/resources/ticketDat.txt");
     ArrayList<BusTicket> tickets = readTheFile(file);
     Validator validator = new Validator(tickets);
     System.out.println("Valid tickets: " + validator.getValidTicketCounter() + '\n' +
@@ -31,7 +33,7 @@ public class Main {
     }
   }
 
-    private static ArrayList<BusTicket> readTheFile (File file) throws IOException, IllegalAccessException {
+    private static ArrayList<BusTicket> readTheFile (File file)  {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayList<BusTicket> tickets = new ArrayList<>();
       try (
@@ -44,8 +46,16 @@ public class Main {
 
           tickets.add(ticket);
         }
+      } catch (JsonMappingException e) {
+        System.out.println("Error " + e.getMessage());
+
+      } catch (JsonProcessingException e) {
+          System.out.println("Error " + e.getMessage());
+
+      } catch (IOException e) {
+          System.out.println("Error " + e.getMessage());
       }
-      return tickets;
+        return tickets;
     }
 
 }
