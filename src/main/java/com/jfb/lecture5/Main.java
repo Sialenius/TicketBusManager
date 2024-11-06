@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Main {
   public static void main(String[] args)  {
 
-    File file = new File("src/main/resources/ticketDat.txt");
+    File file = new File("src/main/resources/ticketData.txt");
     ArrayList<BusTicket> tickets = readTheFile(file);
     Validator validator = new Validator(tickets);
     System.out.println("Valid tickets: " + validator.getValidTicketCounter() + '\n' +
